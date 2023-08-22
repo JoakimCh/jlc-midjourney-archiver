@@ -41,7 +41,7 @@ Well, originally I had my archiver running in [Node.js](https://nodejs.org/) tog
 
 Hence I had to mitigate their detection and the only way I could reliably do this was to actually run the archiver in the browser (pretending to be Midjourney website itself).
 
-At fist I did this by using the Chrome DevTools Protocol to (locally) inject my own script into their website (which is impossible for them to reliably block). But since it also works to inject the script into their website via the DevTools Console (and this is the simpler way); this is what I have decided to do for now!
+At first I did this by using the Chrome DevTools Protocol to (locally) inject my own script into their website (which is impossible for them to reliably block). But since it also works to inject the script into their website via the DevTools Console (and this is the simpler way); this is what I have decided to do for now!
 
 If they block it I'll find a way around their block. But I'm not trying to misuse their service or anything, all I want is just to enable a way for people to easily backup their own archives (which cost them money to create and which they legally own).
 
