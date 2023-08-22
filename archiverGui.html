@@ -1,0 +1,117 @@
+<style>
+  :root {
+    --back: #121212; --text: #e2e2e2; --smooth: #cecece;
+    --wShadow: rgba(255, 255, 255, 0.4);
+    --sShadow: rgba(255, 255, 255, 0.5);
+  }
+  * {user-select: none; box-sizing: border-box}
+  h1 {margin: 10px}
+  p {margin: 5px}
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    background-color: var(--back);
+    color: var(--text);
+    display: flex; flex-direction: column; align-items: center;
+  }
+  input {border: 1px solid var(--smooth); border-radius: 4px;}
+  button:disabled, input:disabled {
+    background-color: var(--smooth);
+  }
+  button {
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 5px; 
+    border: 1px solid var(--smooth);
+    box-shadow: 2px 2px 2px var(--wShadow);
+  }
+  button:not([disabled]):hover {
+    cursor: pointer;
+    box-shadow: 4px 4px 6px var(--sShadow);
+  }
+  button:not([disabled]):active {
+    transform: translateY(1px);
+    box-shadow: none
+  }
+  fieldset {border-radius: 6px;}
+  fieldset + fieldset, 
+  :has(label) + fieldset,
+  div:has(label) + div:has(label) {margin-top: 10px}
+  label > input {margin-right: 6px}
+  p, fieldset {max-width: 350px}
+  button {min-width: 50pt}
+  .progress-container {
+    background-color: #cfcfcf;
+    border-radius: 4px;
+    width: 100%;
+    height: 20px;
+    margin: 10px 0;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background-color: #4caf50;
+    transition: width 0.3s ease-in-out;
+    width: 0%;
+  }
+  .aCenter {text-align: center}
+</style>
+<style id="css_light" disabled>
+  :root {
+    --back: #eeeeeee3; --text: rgb(24, 24, 24);
+    --wShadow: rgba(0, 0, 0, 0.15);
+    --sShadow: rgba(0, 0, 0, 0.2);
+  }
+</style>
+
+<button id="btn_light" tabindex="-1" style="position: absolute; left: 10px;"></button>
+<h1>JLC's Midjourney Archiver</h1>
+<p>Archiver successfully loaded! 👍</p>
+<p style="margin-bottom: 20px">Unless the Midjourney people changed their API or website too much it should work. But please check the console log for errors when archiving.</p>
+
+<form onsubmit="return false">
+  <fieldset id="cfg1">
+    <legend>Images to archive</legend>
+    <div><label><input id="chk_v5grids" type="checkbox">Every v5+ grid; so you don't need to press upscale on the ones you want to keep (they're already upscaled).</label></div>
+    <div><label><input id="chk_lrGrids" type="checkbox">Low resolution grids (MJ versions before v5) in addition to their upscaled versions (or else only the upscaled versions will be archived).</label></div>
+    <div><label><input id="chk_unliked" type="checkbox">Images you didn't press <span title="like">❤️</span> on.</label></div>
+    <fieldset>
+      <legend>Images with rating</legend>
+      <label><input id="chk_rNone" type="checkbox">None</label>
+      <label><input id="chk_rHate" type="checkbox"><span title="hate">🤮</span></label>
+      <label><input id="chk_rDislike" type="checkbox"><span title="dislike">😒</span></label>
+      <label><input id="chk_rLike" type="checkbox"><span title="like">😄</span></label>
+      <label><input id="chk_rLove" type="checkbox"><span title="love">😍</span></label>
+    </fieldset>
+  </fieldset>
+  <fieldset id="cfg2">
+    <legend>Misc options</legend>
+    <div><label><input id="chk_dryRun" type="checkbox">Dry run (do not archive any images).</label></div>
+    <div><label><input id="chk_jobDetailsFromCache" type="checkbox">Get job details from cache (then like and rating statuses are not kept up to date).</label></div>
+    <div><label><input id="chk_skipLoggingDownloads" type="checkbox">Skip console output for each image.</label></div>
+    <div><label><input id="chk_testRun" type="checkbox">Run a test where only the first day is archived (e.g. to test that it works correctly).</label></div>
+    <div><label>Max concurrent downloads: <input type="number" id="val_maxConcurrency" min="1" max="10"></label></div>
+  </fieldset>
+  <fieldset>
+    <legend>Command and control</legend>
+    <button id="btn_folder">Select archive folder</button>
+    <button disabled id="btn_start">Start</button>
+    <button disabled id="btn_stop">Stop</button>
+    <div class="progress-container">
+      <div id="progress" class="progress-bar"></div>
+    </div>
+    <div id="status" class="aCenter"></div>
+  </fieldset>
+</form>
+
+<p><a target="_blank" href="https://github.com/JoakimCh/jlc-midjourney-archiver">Visit project's website on GitHub ⚙️.</a></p>
+<p><a target="_blank" href="https://github.com/sponsors/JoakimCh">Sponsor ❤️ project!</a></p>
+<p>MIT License</p>
+
+<p>Copyright (c) 2023 Joakim L. Christiansen</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
