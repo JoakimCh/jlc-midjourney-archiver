@@ -4,7 +4,7 @@ window.scrollTo(0, 0)
 const log = console.log
 console.clear()
 log({buildId})
-const version = 'v1.0'
+const version = 'v1.1'
 setInterval(() => document.title = "JLC's MJ Archiver "+version, 500)
 log("Welcome to JLC's Midjourney Archiver "+version+"! 🙋")
 log("Some MJ scripts may still throw errors btw, so the errors displayed in this log isn't necessarily from this archiver. Any errors from a script ending with .js is not ours, e.g. main-2d290b7240a6d3c3.js:1. The MJ scripts are just confused because whe changed the contents of the HTML. 🤪")
@@ -294,15 +294,15 @@ async function archiveImage(imgId, job, {maxRetries = 3, retryDelay = 2000} = {}
 /** From a minimal job description from `getJobsFromDay()` check if it is interesting to us or not. */
 function isInterestingJob({id, type, parent_id, parent_grid}) {
   if (parent_id && parent_grid == null) console.warn('Parent_id but no parent_grid.')
-  const v5      = type.includes('v5')
-  const grid    = type.includes('diffusion')
+  const aboveV4 = type.includes('v5') || type.includes('v6')
+  const grid    = type.includes('diffusion') || type.includes('outpaint')
   const upscale = type.includes('upscale') || type.includes('upsample')
   if (grid) {
-    if (v5) {if (config.toArchive.v5gridsAsUpscaled) return true} // then we can ignore v5 virtual upscale jobs
-    else    {if (config.toArchive.lowResGrids)       return true}
+    if (aboveV4) {if (config.toArchive.v5gridsAsUpscaled) return true} // then we can ignore v5 virtual upscale jobs
+    else         {if (config.toArchive.lowResGrids)       return true}
   } else {
     if (!upscale) console.warn('Not diffusion but not upscale/upsample, type: '+type)
-    if (!(v5 && config.toArchive.v5gridsAsUpscaled)) return true // skips v5 virtual upscale jobs if wanted
+    if (!(aboveV4 && config.toArchive.v5gridsAsUpscaled)) return true // skips v5 virtual upscale jobs if wanted
   }
   return false
 }
