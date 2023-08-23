@@ -503,7 +503,7 @@ async function getJobsFromDay(numJobs, {year, month, day}) {
   jobsFromDay = await fetchJson('https://www.midjourney.com/api/app/archive/day/', {query: {
     year, month, day, includePrompts: true // else just job ID
   }})
-  if (jobsFromDay.length != numJobs) throw Error('jobsFromDay.length != numJobs')
+  if (jobsFromDay.length != numJobs) console.warn(`The server seems to still be processing ${jobsFromDay.length - numJobs} recent jobs, these were excluded since we can't get the needed details yet.`)
   await archive.writeFile(path, JSON.stringify(jobsFromDay), {earlyExit: true})
   return jobsFromDay
 }
