@@ -84,6 +84,8 @@
   
   const btn_getScript = document.getElementById('btn_getScript')
   btn_getScript.addEventListener('click', getScript)
+  const btn_getScript2 = document.getElementById('btn_getScript2')
+  btn_getScript2.addEventListener('click', getScript)
   
   async function getScript() {
     let script = ''
@@ -99,7 +101,7 @@
     navigator.clipboard.writeText(
   `{
     const {buildId} = JSON.parse(document.getElementById('__NEXT_DATA__').textContent)
-    if (!buildId) throw Error('Failed to get the MJ build ID! Are you on the correct website? (https://www.midjourney.com/app)')
+    if (!buildId) throw Error('Failed to get the MJ build ID! Are you on the correct website? (https://legacy.midjourney.com/app)')
     globalThis.buildId = buildId
     document.head.innerHTML = '<meta name="next-head-count" content="24">'
     document.body.innerHTML = ${JSON.stringify(html.replace(minifyRegex, ' '))}
@@ -148,6 +150,8 @@
   <p>This is an application I have developed to allow anyone to create a local backup of their own Midjourney images (and to keep them in sync). I'm NOT affiliated with the Midjourney company.</p>
 
   <p>You can read more below or you can <a href="#step1">jump directly to step 1</a> if you're impatient.</p>
+    
+  <p>Or if you already know what to do then just get the script here <button id="btn_getScript2">copy script</button> and goto the <a href="https://legacy.midjourney.com/app/">MJ website</a> 😎.</p>
 
   <h2>Features:</h2>
   <ul>
@@ -166,7 +170,7 @@
   <p>That's also where you can <a target="_blank" href="https://github.com/sponsors/JoakimCh">sponsor my efforts</a> to develop a working solution like this. Since I am at the moment chronically sick, without a job, with tons of debt, two kids and a wife which I can't support economically; I would really appreciate it if you did! ❤️</p>
 
   <h2 id="step1">Step 1:</h3>
-  <p>Make sure that you use a Chromium based browser (e.g. <a href="https://www.google.com/chrome/" target="_blank">Chrome</a>, Brave, Edge, Opera), Safari or Firefox will not work! Then go to the <a href="https://www.midjourney.com/app/" target="_blank">Midjourney website</a> and make sure that you are logged in! It should look similar to this (that's my profile btw):</p>
+  <p>Make sure that you use a Chromium based browser (e.g. <a href="https://www.google.com/chrome/" target="_blank">Chrome</a>, Brave, Edge, Opera), Safari or Firefox will not work! Then go to the <a href="https://legacy.midjourney.com/app/" target="_blank">Midjourney website</a> and make sure that you are logged in! It should look similar to this (that's my profile btw):</p>
   <img id="preview1" src="./imgs/scr1.png">
 
   <h2>Step 2:</h3>

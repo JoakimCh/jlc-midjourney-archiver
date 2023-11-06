@@ -4,7 +4,15 @@ window.scrollTo(0, 0)
 const log = console.log
 console.clear()
 log({buildId})
-const version = 'v1.1'
+const version = 'v1.2'
+const useLegacyWebsite = true
+let mjWebsite = 'https://www.midjourney.com'
+if (useLegacyWebsite) {
+  if (window.location.href != 'https://legacy.midjourney.com/app/') {
+    throw Error('Only compatibility with the legacy website for now, go here: https://legacy.midjourney.com/app/')
+  }
+  mjWebsite = 'https://legacy.midjourney.com/app/'
+}
 setInterval(() => document.title = "JLC's MJ Archiver "+version, 500)
 log("Welcome to JLC's Midjourney Archiver "+version+"! 🙋")
 log("Some MJ scripts may still throw errors btw, so the errors displayed in this log isn't necessarily from this archiver. Any errors from a script ending with .js is not ours, e.g. main-2d290b7240a6d3c3.js:1. The MJ scripts are just confused because whe changed the contents of the HTML. 🤪")
@@ -167,7 +175,7 @@ function stop() {
 async function runArchivingJob() {
   jobsProcessed = 0, imgsDownloaded = 0
   let totalImgsOfInterest = 0
-  const {pageProps: {days: daysWithJobs}} = await fetchJson('https://www.midjourney.com/_next/data/'+buildId+'/app/archive.json')
+  const {pageProps: {days: daysWithJobs}} = await fetchJson(mjWebsite+'/_next/data/'+buildId+'/app/archive.json')
   totalJobCount = daysWithJobs.reduce((sum, {jobs}) => sum + jobs, 0)
   log(`Total job count: ${totalJobCount} (a higher number than what's shown by Midjourney btw)`); log('')
   // (we use reverse() to get the chronological order)
@@ -379,10 +387,10 @@ function titleFromTextPrompt(textPrompt = []) {
   // We replace dot and comma with _ and :: with __ and then spaces with -.
   const maxLength = 180
   let title = textPrompt.join('__')
-    .replaceAll(', ','_')
-    .replaceAll(',','_')
-    .replaceAll('.','_')
     .replaceAll('. ','_')
+    .replaceAll(', ','_')
+    .replaceAll('.','_')
+    .replaceAll(',','_')
     .replaceAll(' ','-')
     .replace(/[^a-z-_0-9]/gi, '')
   let didTrim
@@ -485,7 +493,7 @@ function onlyNeededJobDetails(job) {
 // verified to work with 50
 async function getJobStatus(jobIds) {
   if (!Array.isArray(jobIds)) throw Error('jobIds not an array.')
-  const jobStatus = await fetchJson('https://www.midjourney.com/api/app/job-status/', {data: {jobIds}})
+  const jobStatus = await fetchJson(mjWebsite+'/api/app/job-status/', {data: {jobIds}})
   const result = Array.isArray(jobStatus) ? jobStatus : [jobStatus]
   if (result.length != jobIds.length) throw Error('result.length != jobIds.length')
   return result
@@ -500,7 +508,7 @@ async function getJobsFromDay(numJobs, {year, month, day}) {
     jobsFromDay = JSON.parse(await fileHandle.text())
     if (jobsFromDay.length == numJobs) return jobsFromDay
   }
-  jobsFromDay = await fetchJson('https://www.midjourney.com/api/app/archive/day/', {query: {
+  jobsFromDay = await fetchJson(mjWebsite+'/api/app/archive/day/', {query: {
     year, month, day, includePrompts: true // else just job ID
   }})
   if (jobsFromDay.length != numJobs) console.warn(`The server seems to still be processing ${numJobs - jobsFromDay.length} recent jobs, these were excluded since we can't get the needed details yet.`)
