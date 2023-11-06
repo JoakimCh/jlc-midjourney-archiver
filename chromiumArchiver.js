@@ -11,7 +11,7 @@ if (useLegacyWebsite) {
   if (window.location.href != 'https://legacy.midjourney.com/app/') {
     throw Error('Only compatibility with the legacy website for now, go here: https://legacy.midjourney.com/app/')
   }
-  mjWebsite = 'https://legacy.midjourney.com/app'
+  mjWebsite = 'https://legacy.midjourney.com'
 }
 setInterval(() => document.title = "JLC's MJ Archiver "+version, 500)
 log("Welcome to JLC's Midjourney Archiver "+version+"! 🙋")
