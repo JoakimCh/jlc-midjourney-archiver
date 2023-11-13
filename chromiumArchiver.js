@@ -4,7 +4,7 @@ window.scrollTo(0, 0)
 const log = console.log
 console.clear()
 log({buildId})
-const version = 'v1.2'
+const version = 'v1.3'
 const useLegacyWebsite = true
 let mjWebsite = 'https://www.midjourney.com'
 if (useLegacyWebsite) {
@@ -511,7 +511,7 @@ async function getJobsFromDay(numJobs, {year, month, day}) {
   jobsFromDay = await fetchJson(mjWebsite+'/api/app/archive/day/', {query: {
     year, month, day, includePrompts: true // else just job ID
   }})
-  if (jobsFromDay.length != numJobs) console.warn(`The server seems to still be processing ${numJobs - jobsFromDay.length} recent jobs, these were excluded since we can't get the needed details yet.`)
+  if (jobsFromDay.length < numJobs) console.warn(`The server seems to still be processing ${numJobs - jobsFromDay.length} recent jobs, these were excluded since we can't get the needed details yet.`)
   await archive.writeFile(path, JSON.stringify(jobsFromDay), {earlyExit: true})
   return jobsFromDay
 }
